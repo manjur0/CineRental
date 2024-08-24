@@ -6,10 +6,10 @@ import SideBar from "./Components/SideBar";
 import { movieContext } from "./context";
 
 const App = () => {
-  const [movieData, setMovieData] = useState([]);
+  const [CartData, setCartData] = useState([]);
   return (
     <>
-      <movieContext.Provider value={{ movieData, setMovieData }}>
+      <movieContext.Provider value={{ CartData, setCartData }}>
         <Headers />
         <main>
           <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">

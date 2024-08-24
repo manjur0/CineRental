@@ -3,21 +3,23 @@ import { getImageUrl } from "../utils/cine-utility";
 import Rating from "./Rating";
 import MovieDetailsModal from "./MovieDetailsModal";
 import { movieContext } from "../context";
+import toast, { Toaster } from "react-hot-toast";
 const MovieCard = ({ movie }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const { movieData, setMovieData } = useContext(movieContext);
+  const { CartData, setCartData } = useContext(movieContext);
 
   // handle add to cart
   function handleAddToCart(event, movie) {
     event.stopPropagation();
-    const found = movieData.find((item) => {
+    const found = CartData.find((item) => {
       return item.id === movie.id;
     });
     if (!found) {
-      setMovieData([...movieData, movie]);
+      setCartData([...CartData, movie]);
+      toast.success(`This ${movie.title} has been added successfully`);
     } else {
-      console.log("This movie has been added already");
+      toast.error(`This ${movie.title} movie has been added already`);
     }
   }
 
@@ -34,8 +36,13 @@ const MovieCard = ({ movie }) => {
   }
   return (
     <>
+      <Toaster />
       {showModal && (
-        <MovieDetailsModal movie={selectedMovie} onClose={handleCloseModla} />
+        <MovieDetailsModal
+          movie={selectedMovie}
+          onClose={handleCloseModla}
+          onCartAdd={handleAddToCart}
+        />
       )}
       <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
         <a href="#" onClick={() => hadleMovieSelection(movie)}>
