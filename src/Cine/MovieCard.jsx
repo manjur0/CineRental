@@ -7,16 +7,19 @@ import toast, { Toaster } from "react-hot-toast";
 const MovieCard = ({ movie }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const { CartData, setCartData } = useContext(movieContext);
+  const { state, dispatch } = useContext(movieContext);
 
   // handle add to cart
   function handleAddToCart(event, movie) {
     event.stopPropagation();
-    const found = CartData.find((item) => {
+    const found = state.CartData?.find((item) => {
       return item.id === movie.id;
     });
     if (!found) {
-      setCartData([...CartData, movie]);
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: { ...movie },
+      });
       toast.success(`This ${movie.title} has been added successfully`);
     } else {
       toast.error(`This ${movie.title} movie has been added already`);

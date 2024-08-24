@@ -4,16 +4,12 @@ import { getImageUrl } from "../utils/cine-utility";
 import Delete from "../assets/delete.svg";
 import CheckOut from "../assets/icons/checkout.svg";
 const CardDetailsModal = ({ onClose }) => {
-  const { CartData, setCartData } = useContext(movieContext);
+  const { state, dispatch } = useContext(movieContext);
 
   // Delete item in existing cart item
-  function handleDeleteItem(event, itemId) {
+  function handleDeleteItem(event, item) {
     event.preventDefault();
-    const filteredItems = CartData.filter((item) => {
-      return item.id !== itemId;
-    });
-
-    setCartData([...filteredItems]);
+    dispatch({ type: "REMOVE_FROM_CART", payload: item });
   }
   return (
     <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black/60 backdrop-blur-sm">
@@ -22,11 +18,11 @@ const CardDetailsModal = ({ onClose }) => {
           <h2 className="text-2xl lg:text-[30px] mb-10 font-bold">
             Your Carts
           </h2>
-          {CartData.length === 0 ? (
+          {state.CartData?.length === 0 ? (
             <p className="text-3xl font-semibold">The Cart is Empty!!!</p>
           ) : (
             <div className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14">
-              {CartData.map((movie) => (
+              {state.CartData.map((movie) => (
                 <div key={movie.id} className="grid grid-cols-[1fr_auto] gap-4">
                   <div className="flex items-center gap-4">
                     <img
@@ -48,7 +44,7 @@ const CardDetailsModal = ({ onClose }) => {
                   </div>
                   <div className="flex justify-between gap-4 items-center">
                     <button
-                      onClick={(e) => handleDeleteItem(e, movie.id)}
+                      onClick={(e) => handleDeleteItem(e, movie)}
                       className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
                     >
                       <img className="w-5 h-5" src={Delete} alt="delete icon" />

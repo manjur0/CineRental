@@ -7,7 +7,7 @@ import ShoppingCart from "../assets/shopping-cart.svg";
 import CartDetailsModal from "../Cine/CartDetailsModal";
 import { movieContext, themeContext } from "../context";
 const Headers = () => {
-  const { CartData } = useContext(movieContext);
+  const { state } = useContext(movieContext);
   const { darkMode, setDarkMode } = useContext(themeContext);
   const [showCart, setShowCart] = useState(false);
 
@@ -55,9 +55,9 @@ const Headers = () => {
                   height="24"
                   alt="shopping cart"
                 />
-                {CartData.length > 0 && (
+                {state.CartData?.length > 0 && (
                   <span className="rounded-full absolute top-[-12px] left-[28px] bg-[#12CF6F] text-white text-center p-[2px] w-[30px] h-[30px]">
-                    {CartData.length}
+                    {state.CartData.length}
                   </span>
                 )}
               </a>
