@@ -7,7 +7,6 @@ import CartDetailsModal from "../Cine/CartDetailsModal";
 import { movieContext } from "../context";
 const Headers = () => {
   const { CartData } = useContext(movieContext);
-  console.log(CartData.length + 1);
   const [showCart, setShowCart] = useState(false);
   return (
     <div>
